@@ -1,76 +1,77 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables');
-}
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
-// 类型定义
-export interface Profile {
-  id: string;
-  username?: string;
-  full_name?: string;
-  avatar_url?: string;
-  email?: string;
-  car_model?: string;
-  created_at: string;
-  updated_at: string;
+// 数据库类型定义
+export interface Location {
+  id: string
+  name: string
+  type: string
+  latitude: number
+  longitude: number
+  parking: string
+  parkingFee: string
+  parkingSlots: number
+  toilet: boolean
+  charging: boolean
+  quiet: boolean
+  address: string
+  tags: string[]
+  gaodePoiId: string
+  rating: number
+  reviewCount: number
+  createdAt: string
+  updatedAt: string
 }
 
 export interface Route {
-  id: string;
-  title: string;
-  description?: string;
-  start_location: string;
-  end_location: string;
-  distance_km?: number;
-  estimated_duration_hours?: number;
-  difficulty_level?: 'easy' | 'medium' | 'hard';
-  cover_image_url?: string;
-  created_by?: string;
-  created_at: string;
-  updated_at: string;
+  id: string
+  name: string
+  description: string
+  duration: string
+  distance: string
+  difficulty: string
+  startPoint: any
+  endPoint: any
+  waypoints: any
+  parkingInfo: string
+  chargingInfo: string
+  stayInfo: string
+  toiletInfo: string
+  tags: string[]
+  rating: number
+  reviewCount: number
+  createdAt: string
+  updatedAt: string
 }
 
-export interface RouteWaypoint {
-  id: string;
-  route_id: string;
-  name: string;
-  latitude: number;
-  longitude: number;
-  waypoint_type: 'charging' | 'scenic' | 'rest' | 'food' | 'accommodation';
-  description?: string;
-  order_index: number;
-  created_at: string;
+export interface Post {
+  id: string
+  author: string
+  avatar: string
+  title: string
+  content: string
+  tags: string[]
+  likes: number
+  comments: number
+  time: string
+  images: string[]
+  source?: string
+  createdAt: string
 }
 
-export interface ChargingStation {
-  id: string;
-  name: string;
-  address?: string;
-  latitude: number;
-  longitude: number;
-  connector_types?: string[];
-  power_kw?: number;
-  num_chargers?: number;
-  available_24_7?: boolean;
-  price_per_kwh?: number;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface Review {
-  id: string;
-  route_id: string;
-  user_id?: string;
-  rating?: number;
-  title?: string;
-  content?: string;
-  images?: string[];
-  created_at: string;
-  updated_at: string;
+export interface Product {
+  id: string
+  name: string
+  price: number
+  originalPrice: number
+  image: string
+  tags: string[]
+  rating: number
+  reviews: number
+  description: string
+  createdAt: string
 }
